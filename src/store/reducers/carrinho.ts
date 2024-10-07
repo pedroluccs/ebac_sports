@@ -3,10 +3,12 @@ import { Produto } from '../../App'
 
 type CarrinhoState = {
   itens: Produto[]
+  favoritos: Produto[]
 }
 
 const initialState: CarrinhoState = {
-  itens: []
+  itens: [],
+  favoritos: []
 }
 
 const carrinhoSlice = createSlice({
@@ -21,9 +23,19 @@ const carrinhoSlice = createSlice({
       } else {
         state.itens.push(produto)
       }
+    },
+    favoritar: (state, action: PayloadAction<Produto>) => {
+      const produto = action.payload
+      const index = state.favoritos.findIndex((p) => p.id === produto.id)
+
+      if (index !== -1) {
+        state.favoritos.splice(index, 1)
+      } else {
+        state.favoritos.push(produto)
+      }
     }
   }
 })
 
-export const { adicionar } = carrinhoSlice.actions
+export const { adicionar, favoritar } = carrinhoSlice.actions
 export default carrinhoSlice.reducer

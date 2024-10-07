@@ -11,26 +11,21 @@ export type Produto = {
   nome: string
   preco: number
   imagem: string
+  favorito?: boolean
 }
 
 function App() {
-  const [favoritos, setFavoritos] = useState<Produto[]>([])
-
-  function favoritar(produto: Produto) {
-    if (favoritos.find((p) => p.id === produto.id)) {
-      const favoritosSemProduto = favoritos.filter((p) => p.id !== produto.id)
-      setFavoritos(favoritosSemProduto)
-    } else {
-      setFavoritos([...favoritos, produto])
-    }
-  }
-
   return (
     <Provider store={store}>
       <GlobalStyle />
       <div className="container">
         <Header />
-        <Produtos favoritos={favoritos} favoritar={favoritar} />
+        <Produtos
+          favoritos={[]}
+          favoritar={function (produto: Produto): void {
+            throw new Error('Function not implemented.')
+          }}
+        />
       </div>
     </Provider>
   )
